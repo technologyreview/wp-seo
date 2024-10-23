@@ -441,9 +441,9 @@ if ( ! class_exists( 'WP_SEO' ) ) :
 			} elseif ( is_author() ) {
 				$key = 'archive_author_title';
 			} elseif ( is_category() || is_tag() || is_tax() ) {
-				if ( ( WP_SEO_Settings()->has_term_fields( $taxonomy = get_queried_object()->taxonomy ) ) && ( $option = get_option( $this->get_term_option_name( get_queried_object() ) ) ) && ( ! empty( $option['title'] ) ) ) {
+				if ( get_queried_object() && ( WP_SEO_Settings()->has_term_fields( $taxonomy = get_queried_object()->taxonomy ) ) && ( $option = get_option( $this->get_term_option_name( get_queried_object() ) ) ) && ( ! empty( $option['title'] ) ) ) {
 					return $option['title'];
-				} else {
+				} elseif ( ! empty( $taxonomy ) ) {
 					$key = "archive_{$taxonomy}_title";
 				}
 			} elseif ( is_post_type_archive() ) {
