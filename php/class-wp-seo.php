@@ -430,6 +430,11 @@ if ( ! class_exists( 'WP_SEO' ) ) :
 		 *                       custom or formatted title exists.
 		 */
 		public function wp_title( $title, $sep ) {
+			// If we're generating RSS feed output, no page title is necessary.
+			if ( is_feed() ) {
+				return $title;
+			}
+
 			if ( is_singular() ) {
 				if ( WP_SEO_Settings()->has_post_fields( $post_type = get_post_type() ) && $meta_title = get_post_meta( get_the_ID(), '_meta_title', true ) ) {
 					return $meta_title;
